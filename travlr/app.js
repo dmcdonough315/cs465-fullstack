@@ -7,12 +7,17 @@ var logger = require('morgan');
 //updated file paths for new folder placement
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
-const travelRouter = require('./app_server/routes/travel');
+var travelRouter = require('./app_server/routes/travel');
+const { handlebars } = require('hbs');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
+//registering handlebars partials (https://www.npmjs.com/package/hbs)
+handlebars.registerPartials(path.join(__dirname, 'app_server', 'views/partials'));
+
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
