@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const favicon = require('serve-favicon');
+require('./app_server/models/db');
 
 //updated file paths for new folder placement
 const indexRouter = require('./app_server/routes/index');
