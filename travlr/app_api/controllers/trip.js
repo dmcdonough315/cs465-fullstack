@@ -1,51 +1,49 @@
-const mongoose = require( 'mongoose'); 
-const Model = mongoose.model('trips');
+const mongoose = require('mongoose');
+const model = mongoose.model('trips');
 
-// GET: /trips - list all the trips
-const tripsList = async(req, res) => {
-    Model
-        .find({}) // empty filter for all
-        .then((trips) => {
-            if (!trips || Object.keys(trips).length === 0) {
+//GET: /trips - lists all the trips
+const tripsList = async (req, res) => {
+    model
+        .find({}) //empty filter for all
+        .exec((err, trips) => {
+            if (!trips) {
                 return res
                     .status(404)
-                    .json({ "message": "trips not found"});
-            } else {
-                return res  
-                    .status(200)
-                    .json(trips);
-            }
-        }).catch((err) => {
-            if (err) {
-                return res.status(404)
-        }
-    });
-};
-
-
-// GET: /trips/:tripCode - returns a single trip
-const tripsFindByCode = async (req, res) => {
-    Model   
-        .find({ 'code': req.params.tripCode })
-        .then((trips) => {
-            if (!trips || Object.keys(trips).length === 0) {
-                return res 
-                    .status(404)
                     .json({ "message": "trip not found" });
-            } else {
-                return res 
-                    .status(200)
-                    .json(trips);
-            }
-        }).catch((err) => {
-        if (err) {
+            } else if (err) {
                 return res
                     .status(404)
                     .json(err);
-        }
-    });
+            } else {
+                return res
+                    .status(200)
+                    .json(trips);
+            }
+        });
 };
+
+//GET: /trips/:tripCode - returns a single trip
+const tripsFindCode = async (req, res) => {
+    model
+        .find({ 'code': req.params.tripCode})
+        .exec((err, trip) => {
+            if (!trip) {
+                return res
+                    .status(404)
+                    .json({ "message": "trip not found" });
+            } else if (err) {
+                return res
+                    .status(404)
+                    .json(err);
+            } else {
+                return res
+                    .status(200)
+                    .json(trip);
+            }
+        });
+};
+
 module.exports = {
-    tripslist,
-    tripsFindByCode
+    tripsList,
+    tripsFindCode
 };

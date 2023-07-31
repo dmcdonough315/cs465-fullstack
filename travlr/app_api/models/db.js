@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
-const host = process.env.DB_HOST || '127.0.0.1'
-const dbURI = 'mongodb://127.0.0.1:27017/travlr';
+const host = '127.0.0.1'
+const dbURI = 'mongodb://127.0.0.1/travlr';
 const readLine = require('readline');
 
 //avoid 'current server discovery and monitoring enginer is deprecated'
-mongoose.set('useUnifiedTopology', true);
+//mongoose.set('useUnifiedTopology', true);
+mongoose.set('debug', true);
 
 const connect = () => {
     setTimeout(() => mongoose.connect(dbURI, {
-        useNewUrlParser: true,
-        useCreateIndex: true
+        //useNewUrlParser: true,
+        //useCreateIndex: true
     }), 1000);
 }
 
