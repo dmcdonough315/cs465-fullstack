@@ -63,8 +63,8 @@ const tripsUpdateTrip = async (req, res) => {
 };
 
 const tripsAddTrip = async (req, res) => {
-  Model.create(
-    {
+  Model
+  .create({
       code: req.body.code,
       name: req.body.name,
       length: req.body.length,
@@ -72,20 +72,18 @@ const tripsAddTrip = async (req, res) => {
       resort: req.body.resort,
       perPerson: req.body.perPerson,
       image: req.body.image,
-      description: req.body.description,
-    },
-    (err, trip) => {
-      if (err) {
-        return res
-          .status(400) //bad request
-          .json(err);
-      } else {
-        return res
-          .status(201) //creates
-          .json(trip);
-      }
+      description: req.body.description,})
+  .then((trip) => {
+    return res 
+        .status(201) //created
+        .son(trip);
+  }).catch((er) => {
+    if (err) {
+      return res
+      .status(201)
+      .json(err);
     }
-  );
+  })
 };
 
 module.exports = {
