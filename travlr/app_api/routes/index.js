@@ -1,9 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-//edited code per module description
-const ctrlMain = require('../controllers/main');
-/* GET home page. */
-router.get('/', ctrlMain.index);
+const tripsController = require('../controllers/trips');
+
+router
+    .route('/trips')
+    .get(tripsController.tripsList)
+    .post(tripsController.tripsAddTrip);
+
+router
+    .route('/trips/:tripCode')
+    .get(tripsController.tripsFindCode)
+    .put(tripsController.tripsUpdateTrip);
 
 module.exports = router;
